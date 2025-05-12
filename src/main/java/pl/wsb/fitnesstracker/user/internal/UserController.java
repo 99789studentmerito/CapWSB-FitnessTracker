@@ -2,10 +2,11 @@ package pl.wsb.fitnesstracker.user.internal;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import pl.wsb.fitnesstracker.user.api.EmailNotFoundException;
 import pl.wsb.fitnesstracker.user.api.UserNotFoundException;
-
+import pl.wsb.fitnesstracker.user.api.User;
 import java.util.List;
+import org.springframework.http.HttpStatus;
+
 
 @RestController
 @RequestMapping("/v1/users")
@@ -43,23 +44,29 @@ class UserController {
    }
 
     @GetMapping
-    @RequestMapping("/{Email}")
-    public UserDto getUserByEmail(
-            @PathVariable String email) {
+    @RequestMapping("/email")
+    public List<UserEmailDto> getUserByEmail(@RequestParam String email) {
         return userService.getUserByEmail(email)
-                .map(userMapper::toDto)
-                .orElseThrow(() -> new EmailNotFoundException("User with email=%s was not found"));
+                .stream()
+                .map(userMapper::isEmail)
+                .toList();
+
     }
 
+//    @PostMapping
+//    public UserDto addUser(@RequestBody UserDto userDto) throws InterruptedException {
+//
+//        // TODO: Implement the method to add a new user.
+//        //  You can use the @RequestBody annotation to map the request body to the UserDto object.
+//
+//
+//        return null;
+//    }
 
     @PostMapping
-    public UserDto addUser(@RequestBody UserDto userDto) throws InterruptedException {
-
-        // TODO: Implement the method to add a new user.
-        //  You can use the @RequestBody annotation to map the request body to the UserDto object.
-
-
-        return null;
-    }
+    @ResponseStatus(HttpStatus.CREATED)public UserDto createUser(@RequestBody UserDto userDto) {
+        User user = userMapper.toEntity(userDto);
+        User createdUser = userService.createUser(user);
+        return userMapper.toDto(createdUser);}
 
 }

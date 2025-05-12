@@ -2,6 +2,8 @@ package pl.wsb.fitnesstracker.user.internal;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import pl.wsb.fitnesstracker.user.api.EmailNotFoundException;
+import pl.wsb.fitnesstracker.user.api.UserNotFoundException;
 
 import java.util.List;
 
@@ -31,7 +33,24 @@ class UserController {
                 .toList();
     }
 
-   
+   @GetMapping
+   @RequestMapping("/{userId}")
+   public UserDto getUserById(
+           @PathVariable Long userId) {
+       return userService.getUser(userId)
+            .map(userMapper::toDto)
+               .orElseThrow(() -> new UserNotFoundException(userId));
+   }
+
+    @GetMapping
+    @RequestMapping("/{Email}")
+    public UserDto getUserByEmail(
+            @PathVariable String email) {
+        return userService.getUserByEmail(email)
+                .map(userMapper::toDto)
+                .orElseThrow(() -> new EmailNotFoundException("User with email=%s was not found"));
+    }
+
 
     @PostMapping
     public UserDto addUser(@RequestBody UserDto userDto) throws InterruptedException {

@@ -15,5 +15,4 @@ public class UserNotFoundException extends NotFoundException {
     public UserNotFoundException(Long id) {
         this("User with ID=%s was not found".formatted(id));
     }
-
 }

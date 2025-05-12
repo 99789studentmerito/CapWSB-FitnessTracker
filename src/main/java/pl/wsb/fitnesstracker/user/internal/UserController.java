@@ -1,10 +1,14 @@
 package pl.wsb.fitnesstracker.user.internal;
 
+import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import pl.wsb.fitnesstracker.user.api.EmailNotFoundException;
 import pl.wsb.fitnesstracker.user.api.UserNotFoundException;
 import pl.wsb.fitnesstracker.user.api.User;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.http.HttpStatus;
 
 
@@ -43,14 +47,27 @@ class UserController {
                .orElseThrow(() -> new UserNotFoundException(userId));
    }
 
+//    @GetMapping
+//    @RequestMapping("/email")
+//    public List<UserEmailDto> getUserByEmail(@RequestParam String email) {
+//        Optional<User> users = userService.getUserByEmail(email);
+//
+//        if (users.isEmpty()) {
+//            throw new EmailNotFoundException("User with email " + email + " not found.");
+//        }
+//
+//        return users.stream()
+//                .map(userMapper::isEmail)
+//                .toList();
+//    }
+
     @GetMapping
     @RequestMapping("/email")
-    public List<UserEmailDto> getUserByEmail(@RequestParam String email) {
+    public List<UserEmailDto> getUserByEmail(@RequestParam String email ) {
         return userService.getUserByEmail(email)
                 .stream()
                 .map(userMapper::isEmail)
                 .toList();
-
     }
 
 //    @PostMapping

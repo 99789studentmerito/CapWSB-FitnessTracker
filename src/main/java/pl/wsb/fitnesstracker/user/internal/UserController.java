@@ -2,10 +2,15 @@ package pl.wsb.fitnesstracker.user.internal;
 
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.wsb.fitnesstracker.user.api.EmailNotFoundException;
 import pl.wsb.fitnesstracker.user.api.UserNotFoundException;
 import pl.wsb.fitnesstracker.user.api.User;
+
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,10 +85,53 @@ class UserController {
 //        return null;
 //    }
 
+    @GetMapping
+    @RequestMapping("older/{time}")
+    public List<UserDto> getUsersBornBefore(@PathVariable("time") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        return userService.findAllUsers()
+                .stream()
+                .filter(user -> user.getBirthdate().isBefore(date))
+                .map(userMapper::toDto)
+                .toList();
+    }
+
+    @GetMapping("/search/email")
+    public List<UserEmailDto> findAllUsersByEmailFragment(@RequestParam String fragment) {
+        return userService.findUsersByEmailFragment(fragment)
+                .stream()
+                .map(userMapper::isEmail)
+                .toList();
+    }
+
+    @GetMapping("/search/name")
+    public List<UserEmailDto> findAllUsersByNameFragment(@RequestParam String fragment) {
+        return userService.findUsersByNameFragment(fragment)
+                .stream()
+                .map(userMapper::isEmail)
+                .toList();
+    }
+
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)public UserDto createUser(@RequestBody UserDto userDto) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserDto createUser(@RequestBody UserDto userDto) {
         User user = userMapper.toEntity(userDto);
         User createdUser = userService.createUser(user);
-        return userMapper.toDto(createdUser);}
+        return userMapper.toDto(createdUser);
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {
+        // Znalezienie użytkownika po ID
+        User user = userService.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User with ID " + userId + " not found"));
+
+        // Usuwanie użytkownika
+        userService.deleteUser(user);
+
+        // Zwraca odpowiedź z kodem statusu 204 (No Content)
+        return ResponseEntity.noContent().build();
+    }
+
+
 
 }

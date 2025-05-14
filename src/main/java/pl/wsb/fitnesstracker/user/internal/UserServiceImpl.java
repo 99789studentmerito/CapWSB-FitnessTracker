@@ -2,6 +2,7 @@ package pl.wsb.fitnesstracker.user.internal;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import pl.wsb.fitnesstracker.user.api.User;
 import pl.wsb.fitnesstracker.user.api.UserProvider;
@@ -41,4 +42,24 @@ class UserServiceImpl implements UserService, UserProvider {
         return userRepository.findAll();
     }
 
+
+    public List<User> findUsersByEmailFragment(String fragment) {
+        return userRepository.findByEmailIgnoreCaseContaining(fragment);
+    }
+
+    public List<User> findUsersByNameFragment(String fragment) {
+        return userRepository.findByFirstNameIgnoreCaseContainingOrLastNameIgnoreCaseContaining(fragment, fragment);
+    }
+
+    public Optional<User> findById(Long userId) {
+        return userRepository.findById(userId);
+    }
+
+    // Metoda do usuwania użytkownika
+    public void deleteUser(User user) {
+        if (user.getId() == null) {
+            throw new IllegalArgumentException("User does not have an ID. Cannot delete.");
+        }
+        userRepository.delete(user);
+    }
 }

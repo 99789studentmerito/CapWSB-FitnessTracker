@@ -62,4 +62,12 @@ class UserServiceImpl implements UserService, UserProvider {
         }
         userRepository.delete(user);
     }
+    // Metoda do updatowania
+    public User updateUser(User user) {
+        if (user.getId() == null) {
+            throw new IllegalArgumentException("User must have an ID to be updated.");
+        }
+        return userRepository.save(user);
+    }
+
 }

@@ -43,14 +43,14 @@ class UserController {
                 .toList();
     }
 
-   @GetMapping
-   @RequestMapping("/{userId}")
-   public UserDto getUserById(
-           @PathVariable Long userId) {
-       return userService.getUser(userId)
-            .map(userMapper::toDto)
-               .orElseThrow(() -> new UserNotFoundException(userId));
-   }
+    @GetMapping
+    @RequestMapping("/{userId}")
+    public UserDto getUserById(
+            @PathVariable Long userId) {
+        return userService.getUser(userId)
+                .map(userMapper::toDto)
+                .orElseThrow(() -> new UserNotFoundException(userId));
+    }
 
 //    @GetMapping
 //    @RequestMapping("/email")
@@ -68,7 +68,7 @@ class UserController {
 
     @GetMapping
     @RequestMapping("/email")
-    public List<UserEmailDto> getUserByEmail(@RequestParam String email ) {
+    public List<UserEmailDto> getUserByEmail(@RequestParam String email) {
         return userService.getUserByEmail(email)
                 .stream()
                 .map(userMapper::isEmail)
@@ -132,6 +132,17 @@ class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/{userId}")
+    public UserDto updateUser(@PathVariable Long userId, @RequestBody UserDto userDto) {
+        User existingUser = userService.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId));
+        existingUser.setFirstName(userDto.firstName());
+        existingUser.setLastName(userDto.lastName());
+        existingUser.setBirthdate(userDto.birthdate());
+        existingUser.setEmail(userDto.email());
 
+        User updatedUser = userService.updateUser(existingUser);
 
+        return userMapper.toDto(updatedUser);
+    }
 }

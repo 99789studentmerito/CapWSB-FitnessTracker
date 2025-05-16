@@ -17,6 +17,7 @@ import java.util.Optional;
 import org.springframework.http.HttpStatus;
 
 
+
 @RestController
 @RequestMapping("/v1/users")
 @RequiredArgsConstructor
@@ -25,7 +26,10 @@ class UserController {
     private final UserServiceImpl userService;
 
     private final UserMapper userMapper;
-
+    /**
+     * Retrieves all users.
+     * @return list of all users as UserDto
+     */
     @GetMapping
     public List<UserDto> getAllUsers() {
         return userService.findAllUsers()
@@ -33,7 +37,10 @@ class UserController {
                 .map(userMapper::toDto)
                 .toList();
     }
-
+    /**
+     * Retrieves all users in a simplified form.
+     * @return list of users as UserSimpleDto
+     */
     //
     @GetMapping("/simple")
     public List<UserSimpleDto> getAllSimpleUsers() {
@@ -42,7 +49,12 @@ class UserController {
                 .map(userMapper::isSimple)
                 .toList();
     }
-
+    /**
+     * Retrieves a user by ID.
+     * @param userId user ID
+     * @return user as UserDto
+     * @throws UserNotFoundException if the user is not found
+     */
     @GetMapping
     @RequestMapping("/{userId}")
     public UserDto getUserById(
@@ -66,6 +78,12 @@ class UserController {
 //                .toList();
 //    }
 
+    /**
+     * Retrieves users by email
+     *
+     * @param email the email address to search for
+     * @return list of users as UserEmailDto
+     */
     @GetMapping
     @RequestMapping("/email")
     public List<UserEmailDto> getUserByEmail(@RequestParam String email) {
@@ -85,6 +103,12 @@ class UserController {
 //        return null;
 //    }
 
+    /**
+     * Retrieves users born before a specific date
+     *
+     * @param date the cutoff birthdate
+     * @return list of users as UserDto
+     */
     @GetMapping
     @RequestMapping("older/{time}")
     public List<UserDto> getUsersBornBefore(@PathVariable("time") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
@@ -95,6 +119,12 @@ class UserController {
                 .toList();
     }
 
+    /**
+     * Finds all users whose email contains the given fragment
+     *
+     * @param fragment the email fragment to search for
+     * @return list of users as UserEmailDto
+     */
     @GetMapping("/search/email")
     public List<UserEmailDto> findAllUsersByEmailFragment(@RequestParam String fragment) {
         return userService.findUsersByEmailFragment(fragment)
@@ -103,6 +133,11 @@ class UserController {
                 .toList();
     }
 
+    /**
+     * Finds all users whose name contains the given fragment
+     * @param fragment the name fragment to search for
+     * @return list of users as UserEmailDto
+     */
     @GetMapping("/search/name")
     public List<UserEmailDto> findAllUsersByNameFragment(@RequestParam String fragment) {
         return userService.findUsersByNameFragment(fragment)
@@ -111,6 +146,12 @@ class UserController {
                 .toList();
     }
 
+    /**
+     * Create a new user
+     *
+     * @param userDto the user data to create
+     * @return the created user as UserDto
+     */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto createUser(@RequestBody UserDto userDto) {
@@ -119,6 +160,11 @@ class UserController {
         return userMapper.toDto(createdUser);
     }
 
+    /**
+     * Delete a user by ID
+     * @param userId the ID of the user to delete
+     * @return HTTP 204 No Content if successful
+     */
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {
         // Znalezienie użytkownika po ID
@@ -132,6 +178,13 @@ class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    /**
+     * Update an existing user.
+            * @param userId the ID of the user to update
+     * @param userDto the new user data
+     * @return the updated user as UserDto
+     * @throws UserNotFoundException if the user is not found
+     */
     @PutMapping("/{userId}")
     public UserDto updateUser(@PathVariable Long userId, @RequestBody UserDto userDto) {
         User existingUser = userService.findById(userId)

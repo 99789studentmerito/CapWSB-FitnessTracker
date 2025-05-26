@@ -28,6 +28,16 @@ public class UserServiceImpl implements UserService, UserProvider {
     }
 
     @Override
+    public User deleteUser(User user) {
+        log.info("Deleting User {}", user);
+        if (user.getId() != null) {
+            throw new IllegalArgumentException("User has already DB ID, update is not permitted!");
+        }
+        userRepository.delete(user);
+        return user;
+    }
+
+    @Override
     public Optional<User> getUser(final Long userId) {
         return userRepository.findById(userId);
     }

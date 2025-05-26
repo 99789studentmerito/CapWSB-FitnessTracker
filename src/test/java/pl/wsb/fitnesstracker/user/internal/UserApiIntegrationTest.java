@@ -211,5 +211,9 @@ class UserApiIntegrationTest extends IntegrationTestBase {
         assertThat(user.getEmail()).isEqualTo(USER_EMAIL);
     }
 
+    public static User removeUser() {
+        return new User(randomUUID().toString(), randomUUID().toString(), LocalDate.now(), randomUUID().toString());
+    }
+
 
 }

@@ -1,21 +1,15 @@
 package pl.wsb.fitnesstracker.user.internal;
 
-import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.wsb.fitnesstracker.user.api.EmailNotFoundException;
-import pl.wsb.fitnesstracker.user.api.UserNotFoundException;
 import pl.wsb.fitnesstracker.user.api.User;
+import pl.wsb.fitnesstracker.user.api.UserNotFoundException;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.List;
-import java.util.Optional;
-
-import org.springframework.http.HttpStatus;
-
 
 
 @RestController

@@ -1,32 +1,39 @@
 package pl.wsb.fitnesstracker.training.internal;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.wsb.fitnesstracker.mail.api.EmailSender;
+import pl.wsb.fitnesstracker.mail.api.EmailDto;
 import pl.wsb.fitnesstracker.training.api.TrainingReportService;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.scheduling.annotation.Async;
+import pl.wsb.fitnesstracker.training.api.TrainingService;
+import pl.wsb.fitnesstracker.user.api.User;
+import pl.wsb.fitnesstracker.user.internal.UserRepository;
 
 import java.time.YearMonth;
+import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class TrainingReportServiceImpl implements TrainingReportService {
 
+    private final UserRepository userRepository;
+    private final TrainingService trainingService;
+    private final EmailSender emailSender;
+
     @Override
-    public void generateAndSendMonthlyReports(YearMonth yearMonth) {
-        // TODO: Implement logic to generate and send reports
-        System.out.println("Generowanie i wysyłanie raport dla: " + (yearMonth));
+    public void generateAndSendMonthlyReports(YearMonth reportMonth) {
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+            int totalWorkouts = trainingService.findTrainingsByUser(user).size();
 
+            String subject = "Raport: liczba wszystkich treningów";
+            String body = String.format(
+                    "Cześć %s!\nW sumie zarejestrowałeś(-aś) %d treningów w naszym systemie.",
+                    user.getFirstName(), totalWorkouts
+            );
+
+            EmailDto email = new EmailDto(user.getEmail(), subject, body);
+            emailSender.send(email);
+        }
     }
-
-    @Async
-    public void sendEmail(String to, String subject, String body) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo("your.recipient@email.com");
-        message.setFrom("john.doe@your.domain");
-        message.setSubject(subject);
-        message.setText(body);
-
-        .send(message);
-    }
-
 }

@@ -1,0 +1,160 @@
+{
+  "info": {
+    "name": "Training API",
+    "_postman_id": "training-api-uuid-placeholder",
+    "description": "Collection for testing Training API endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get All Trainings",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/v1/trainings",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["v1", "trainings"]
+        }
+      }
+    },
+    {
+      "name": "Get Training By ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/v1/trainings/training/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["v1", "trainings", "training", "1"]
+        }
+      }
+    },
+    {
+      "name": "Get Trainings By User ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/v1/trainings/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["v1", "trainings", "1"]
+        }
+      }
+    },
+    {
+      "name": "Get Trainings By Activity Type",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/v1/trainings/activityType?activityType=RUNNING",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["v1", "trainings", "activityType"],
+          "query": [
+            {
+              "key": "activityType",
+              "value": "RUNNING"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Create Training",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": 1,\n  \"startTime\": \"2024-06-01T10:00:00\",\n  \"endTime\": \"2024-06-01T11:00:00\",\n  \"activityType\": \"RUNNING\",\n  \"distance\": 5.0,\n  \"averageSpeed\": 10.0\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/v1/trainings",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["v1", "trainings"]
+        }
+      }
+    },
+    {
+      "name": "Delete Training",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/v1/trainings/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["v1", "trainings", "1"]
+        }
+      }
+    },
+    {
+      "name": "Get Finished Trainings After Date",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/v1/trainings/finished/2024-06-01",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["v1", "trainings", "finished", "2024-06-01"]
+        }
+      }
+    },
+    {
+      "name": "Update Training (PUT)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": 1,\n  \"startTime\": \"2024-06-01T10:00:00\",\n  \"endTime\": \"2024-06-01T11:00:00\",\n  \"activityType\": \"RUNNING\",\n  \"distance\": 5.0,\n  \"averageSpeed\": 10.0\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/v1/trainings/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["v1", "trainings", "1"]
+        }
+      }
+    },
+    {
+      "name": "Partial Update Training (PATCH)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"distance\": 7.5\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/v1/trainings/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["v1", "trainings", "1"]
+        }
+      }
+    }
+  ]
+}

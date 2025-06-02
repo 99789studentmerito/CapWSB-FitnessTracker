@@ -21,6 +21,7 @@ public class TrainingController {
     private final TrainingMapper trainingMapper;
     private final UserProvider userProvider;
 
+
     @GetMapping
     public List<TrainingDto> getAllTrainings() {
         return trainingService.findAllTrainings()
@@ -28,7 +29,7 @@ public class TrainingController {
                 .map(trainingMapper::toDto)
                 .toList();
     }
-
+    // wyszukiwanie treningów po ID
     @GetMapping("/training/{trainingId}")
     public TrainingDto getTrainingById(@PathVariable Long trainingId) {
         return trainingService.getTraining(trainingId)

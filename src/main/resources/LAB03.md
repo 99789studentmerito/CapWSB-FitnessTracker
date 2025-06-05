@@ -33,7 +33,7 @@ Stworzone API powinno pozwalać na:
   znaleźć można w `UserRepository`
 - [x] rozwiązanie powinno spełniać zasady SOLID
 - [x] testy integracyjne powinny poprawnie się wykonywać TrainingApiIntegrationTest
-- [ ] (OPCJONALNIE) rozwiązanie powinno być pokryte testami jednostkowymi (>80%)
+- [x] (OPCJONALNIE) rozwiązanie powinno być pokryte testami jednostkowymi (>80%)
 - [x] rozwiązanie powinno być odpowiednio zhermetyzowane (nie udostępniać funkcjonalności pozostałym pakietom programu)
 - [x] kod powinien być odpowiednio udokumentowany za pomocą JavaDoc
 - [x] do kodu powinna zostać dołączona wyeksportowana kolekcja zapytań z programu Postman, pozwalająca przetestować
@@ -51,7 +51,7 @@ miesiącu.
 
 - [x] w oparciu o ustalony zdefiniowany czas (co miesiąc) generowany jest raport z treningami dla każdego użytkownika z
   danego miesiąca
-- [ ] raport wysyłany jest za pomocą e-mail z podsumowaniem do każdego użytkownika, ile treningów ma zarejestrowanych
+- [x] raport wysyłany jest za pomocą e-mail z podsumowaniem do każdego użytkownika, ile treningów ma zarejestrowanych
   łącznie
 
 ## ZADANIE 3 (opcjonalne). Sieciowe API do operacji typu CRUD na Statistics (bez użycia rekordów)

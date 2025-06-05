@@ -22,4 +22,11 @@ public class TrainingUpdateRequest {
     public ActivityType getActivityType() { return activityType; }
     public Double getDistance() { return distance; }
     public Double getAverageSpeed() { return averageSpeed; }
+
+    public void setUserId(Long userId) { this.userId = userId; }
+    public void setStartTime(OffsetDateTime startTime) { this.startTime = startTime; }
+    public void setEndTime(OffsetDateTime endTime) { this.endTime = endTime; }
+    public void setActivityType(ActivityType activityType) { this.activityType = activityType; }
+    public void setDistance(Double distance) { this.distance = distance; }
+    public void setAverageSpeed(Double averageSpeed) { this.averageSpeed = averageSpeed; }
 }

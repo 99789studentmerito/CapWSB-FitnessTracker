@@ -15,4 +15,11 @@ public record TrainingCreateRequest(
         ActivityType activityType,
         double distance,
         double averageSpeed
-) {}
+) {
+        public TrainingCreateRequest {
+                if (userId == null) throw new NullPointerException("userId cannot be null");
+                if (startTime == null) throw new NullPointerException("startTime cannot be null");
+                if (endTime == null) throw new NullPointerException("endTime cannot be null");
+                if (activityType == null) throw new NullPointerException("activityType cannot be null");
+        }
+}

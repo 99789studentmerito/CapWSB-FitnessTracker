@@ -1,5 +1,7 @@
 package pl.wsb.fitnesstracker.user.api;
 
+import pl.wsb.fitnesstracker.user.internal.model.User;
+
 import java.util.List;
 import java.util.Optional;
 

@@ -26,7 +26,7 @@ class TrainingDtoTest {
     void shouldCreateTrainingDtoWithAllFields() {
         // given
         Long id = 1L;
-        UserDto user = new UserDto(1L, "John", "Doe", LocalDate.of(1979, 5, 1) , "john@example.com");
+        UserDto user = new UserDto(1L, "John", "Doe", LocalDate.of(1979, 5, 1) , "john@example.com", "JohnyDepp");
         OffsetDateTime startTime = OffsetDateTime.of(2024, 1, 1, 10, 0, 0, 0, ZoneOffset.UTC);
         OffsetDateTime endTime = OffsetDateTime.of(2024, 1, 1, 11, 0, 0, 0, ZoneOffset.UTC);
         ActivityType activityType = ActivityType.RUNNING;
@@ -51,7 +51,7 @@ class TrainingDtoTest {
     @Test
     void shouldBeEqualWhenAllFieldsAreEqual() {
         // given
-        UserDto user = new UserDto(1L, "John", "Doe", LocalDate.of(1979, 5, 1) , "john@example.com");
+        UserDto user = new UserDto(1L, "John", "Doe", LocalDate.of(1979, 5, 1) , "john@example.com", "JohnyDepp");
         OffsetDateTime startTime = OffsetDateTime.of(2024, 1, 1, 10, 0, 0, 0, ZoneOffset.UTC);
         OffsetDateTime endTime = OffsetDateTime.of(2024, 1, 1, 11, 0, 0, 0, ZoneOffset.UTC);
 
@@ -68,7 +68,7 @@ class TrainingDtoTest {
     @Test
     void shouldNotBeEqualWhenFieldsDiffer() {
         // given
-        UserDto user = new UserDto(1L, "John", "Doe", LocalDate.of(1979, 5, 1) , "john@example.com");
+        UserDto user = new UserDto(1L, "John", "Doe", LocalDate.of(1979, 5, 1) , "john@example.com", "Johnywdepl");
         OffsetDateTime startTime = OffsetDateTime.of(2024, 1, 1, 10, 0, 0, 0, ZoneOffset.UTC);
         OffsetDateTime endTime = OffsetDateTime.of(2024, 1, 1, 11, 0, 0, 0, ZoneOffset.UTC);
 
@@ -82,7 +82,7 @@ class TrainingDtoTest {
     @Test
     void shouldSerializeAndDeserializeCorrectly() throws Exception {
         // given
-        UserDto user = new UserDto(1L, "John", "Doe", LocalDate.of(1979, 5, 1) , "john@example.com");
+        UserDto user = new UserDto(1L, "John", "Doe", LocalDate.of(1979, 5, 1) , "john@example.com", "johnymamony");
         OffsetDateTime startTime = OffsetDateTime.of(2024, 1, 1, 10, 0, 0, 0, ZoneOffset.UTC);
         OffsetDateTime endTime = OffsetDateTime.of(2024, 1, 1, 11, 0, 0, 0, ZoneOffset.UTC);
         TrainingDto originalDto = new TrainingDto(1L, user, startTime, endTime, ActivityType.RUNNING, 10.5, 12.3);
@@ -111,7 +111,7 @@ class TrainingDtoTest {
     @Test
     void shouldCreateToStringRepresentation() {
         // given
-        UserDto user = new UserDto(1L, "John", "Doe", LocalDate.of(1979, 5, 1) , "john@example.com");
+        UserDto user = new UserDto(1L, "John", "Doe", LocalDate.of(1979, 5, 1) , "john@example.com", "Johnywdepl");
         OffsetDateTime startTime = OffsetDateTime.of(2024, 1, 1, 10, 0, 0, 0, ZoneOffset.UTC);
         OffsetDateTime endTime = OffsetDateTime.of(2024, 1, 1, 11, 0, 0, 0, ZoneOffset.UTC);
         TrainingDto trainingDto = new TrainingDto(1L, user, startTime, endTime, ActivityType.RUNNING, 10.5, 12.3);

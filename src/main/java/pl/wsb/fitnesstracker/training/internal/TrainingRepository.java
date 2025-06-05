@@ -2,7 +2,7 @@ package pl.wsb.fitnesstracker.training.internal;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import pl.wsb.fitnesstracker.training.api.Training;
-import pl.wsb.fitnesstracker.user.api.User;
+import pl.wsb.fitnesstracker.user.internal.model.User;
 
 import java.time.LocalDateTime;
 import java.util.List;

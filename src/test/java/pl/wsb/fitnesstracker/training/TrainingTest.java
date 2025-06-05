@@ -3,7 +3,7 @@ package pl.wsb.fitnesstracker.training;
 import org.junit.jupiter.api.Test;
 import pl.wsb.fitnesstracker.training.api.Training;
 import pl.wsb.fitnesstracker.training.internal.ActivityType;
-import pl.wsb.fitnesstracker.user.api.User;
+import pl.wsb.fitnesstracker.user.internal.model.User;
 
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,7 +21,8 @@ class TrainingTest {
                 "John",
                 "Doe",
                 LocalDate.of(1990, 1, 1),
-                "john.doe@example.com"
+                "john.doe@example.com",
+                "JohnyDepp"
         );
     }
 
@@ -115,7 +116,8 @@ class TrainingTest {
                 "Anna",
                 "Doe",
                 LocalDate.of(1995, 5, 15),
-                "anna.doe@example.com"
+                "anna.doe@example.com",
+                "AnnaPanna"
         );
 
         LocalDateTime newStartTime = LocalDateTime.now().plusDays(1);

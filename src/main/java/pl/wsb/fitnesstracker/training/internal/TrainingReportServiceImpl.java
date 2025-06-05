@@ -6,7 +6,7 @@ import pl.wsb.fitnesstracker.mail.api.EmailSender;
 import pl.wsb.fitnesstracker.mail.api.EmailDto;
 import pl.wsb.fitnesstracker.training.api.TrainingReportService;
 import pl.wsb.fitnesstracker.training.api.TrainingService;
-import pl.wsb.fitnesstracker.user.api.User;
+import pl.wsb.fitnesstracker.user.internal.model.User;
 import pl.wsb.fitnesstracker.user.internal.UserRepository;
 
 import java.time.YearMonth;

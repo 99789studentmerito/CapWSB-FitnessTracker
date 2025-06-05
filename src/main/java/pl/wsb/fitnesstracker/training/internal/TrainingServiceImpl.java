@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import pl.wsb.fitnesstracker.training.api.Training;
 import pl.wsb.fitnesstracker.training.api.TrainingProvider;
 import pl.wsb.fitnesstracker.training.api.TrainingService;
-import pl.wsb.fitnesstracker.user.api.User;
+import pl.wsb.fitnesstracker.user.internal.model.User;
 
 import java.time.LocalDateTime;
 import java.util.List;

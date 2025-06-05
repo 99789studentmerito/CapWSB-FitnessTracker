@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pl.wsb.fitnesstracker.training.api.*;
-import pl.wsb.fitnesstracker.user.api.User;
+import pl.wsb.fitnesstracker.user.internal.model.User;
 import pl.wsb.fitnesstracker.user.api.UserDto;
 import pl.wsb.fitnesstracker.user.api.UserProvider;
 
@@ -64,7 +64,7 @@ public class TrainingController {
                 .orElseThrow(() -> new IllegalArgumentException("User not found for id: " + request.userId()));
         TrainingDto trainingDto = new TrainingDto(
                 null,
-                new UserDto(user.getId(), user.getFirstName(), user.getLastName(), user.getBirthdate(), user.getEmail()),
+                new UserDto(user.getId(), user.getFirstName(), user.getLastName(), user.getBirthdate(), user.getEmail(), user.getUsername()),
                 request.startTime(),
                 request.endTime(),
                 request.activityType(),

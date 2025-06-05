@@ -1,13 +1,11 @@
 {
   "info": {
-    "name": "User API",
-    "_postman_id": "your-uuid-here",
-    "description": "Collection for testing User API endpoints",
+    "name": "FitnessTracker User API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
     {
-      "name": "Get All Users",
+      "name": "List All Users (Simple)",
       "request": {
         "method": "GET",
         "header": [],
@@ -21,13 +19,102 @@
       }
     },
     {
+      "name": "Get User By ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/v1/users/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["v1", "users", "1"]
+        }
+      }
+    },
+    {
+      "name": "Get User By Email",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/v1/users/email?email=test@example.com",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["v1", "users", "email"],
+          "query": [{ "key": "email", "value": "test@example.com" }]
+        }
+      }
+    },
+    {
+      "name": "Get User By Username",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/v1/users/username?username=testuser",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["v1", "users", "username"],
+          "query": [{ "key": "username", "value": "testuser" }]
+        }
+      }
+    },
+    {
+      "name": "Search Users By Email Fragment",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/v1/users/search/email?emailFragment=example",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["v1", "users", "search", "email"],
+          "query": [{ "key": "emailFragment", "value": "example" }]
+        }
+      }
+    },
+    {
+      "name": "Search Users By Name Fragment",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/v1/users/search/name?nameFragment=John",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["v1", "users", "search", "name"],
+          "query": [{ "key": "nameFragment", "value": "John" }]
+        }
+      }
+    },
+    {
+      "name": "Search Users Older Than",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/v1/users/older-than?age=30",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["v1", "users", "older-than"],
+          "query": [{ "key": "age", "value": "30" }]
+        }
+      }
+    },
+    {
       "name": "Create User",
       "request": {
         "method": "POST",
-        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"birthdate\": \"1990-01-01\",\n  \"email\": \"john.doe@example.com\"\n}"
+          "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"birthdate\": \"1990-01-01\",\n  \"email\": \"john.doe@example.com\",\n  \"username\": \"johndoe\"\n}"
         },
         "url": {
           "raw": "http://localhost:8080/v1/users",
@@ -37,7 +124,38 @@
           "path": ["v1", "users"]
         }
       }
+    },
+    {
+      "name": "Update User",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Doe\",\n  \"birthdate\": \"1991-02-02\",\n  \"email\": \"jane.doe@example.com\",\n  \"username\": \"janedoe\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/v1/users/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["v1", "users", "1"]
+        }
+      }
+    },
+    {
+      "name": "Delete User",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/v1/users/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["v1", "users", "1"]
+        }
+      }
     }
-    // Add more endpoints as needed
   ]
 }

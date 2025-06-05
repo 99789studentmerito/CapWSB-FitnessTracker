@@ -1,72 +1,104 @@
 package pl.wsb.fitnesstracker.user.internal;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import pl.wsb.fitnesstracker.user.api.User;
-import pl.wsb.fitnesstracker.user.api.UserProvider;
-import pl.wsb.fitnesstracker.user.api.UserService;
+import pl.wsb.fitnesstracker.user.api.*;
+import pl.wsb.fitnesstracker.user.internal.model.User;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+/**
+ * Implementation of UserService for managing FitnessTracker users.
+ */
 @Service
-@RequiredArgsConstructor
-@Slf4j
-public class UserServiceImpl implements UserService, UserProvider {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper = new UserMapper();
+
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
-    public User createUser(final User user) {
-        log.info("Creating User {}", user);
-        if (user.getId() != null) {
-            throw new IllegalArgumentException("User has already DB ID, update is not permitted!");
+    public UserDto createUser(UserDto userDto) {
+        User user = userMapper.toEntity(userDto);
+        user.setId(null); // Ensure ID is not set for new user
+        User saved = userRepository.save(user);
+        return userMapper.toDto(saved);
+    }
+    @Override
+    public List<UserDto> getAllUsers() {
+        return userRepository.findAll().stream()
+                .map(userMapper::toDto)
+                .collect(Collectors.toList());
+    }
+    @Override
+    public Optional<UserDto> getUserById(Long id) {
+        return userRepository.findById(id).map(userMapper::toDto);
+    }
+
+    @Override
+    public Optional<UserDto> getUserByEmail(String email) {
+        return userRepository.findByEmailIgnoreCase(email).map(userMapper::toDto);
+    }
+
+    @Override
+    public Optional<UserDto> getUserByUsername(String username) {
+        return userRepository.findByUsernameIgnoreCase(username).map(userMapper::toDto);
+    }
+
+    @Override
+    public List<UserSimpleDto> getAllUsersSimple() {
+        return userRepository.findAll().stream()
+                .map(userMapper::toSimpleDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserSearchResultDto> searchUsersByEmailFragment(String emailFragment) {
+        return userRepository.findAll().stream()
+                .filter(u -> u.getEmail() != null && u.getEmail().toLowerCase().contains(emailFragment.toLowerCase()))
+                .map(userMapper::toSearchResultDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserSearchResultDto> searchUsersByNameFragment(String nameFragment) {
+        List<User> users = userRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(nameFragment, nameFragment);
+        return users.stream()
+                .map(userMapper::toSearchResultDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserSearchResultDto> searchUsersOlderThan(int age) {
+        LocalDate now = LocalDate.now();
+        return userRepository.findAll().stream()
+                .filter(u -> u.getBirthdate() != null && Period.between(u.getBirthdate(), now).getYears() > age)
+                .map(userMapper::toSearchResultDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public UserDto updateUser(Long id, UserDto userDto) {
+        User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        user.setFirstName(userDto.firstName());
+        user.setLastName(userDto.lastName());
+        user.setBirthdate(userDto.birthdate());
+        user.setEmail(userDto.email());
+        if (userDto.username() != null && !userDto.username().isBlank()) {
+            user.setUsername(userDto.username());
         }
-        return userRepository.save(user);
+        User saved = userRepository.save(user);
+        return userMapper.toDto(saved);
     }
 
     @Override
-    public Optional<User> getUser(final Long userId) {
-        return userRepository.findById(userId);
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
     }
-
-    @Override
-    public Optional<User> getUserByEmail(final String email) {
-        return userRepository.findByEmail(email);
-    }
-
-    @Override
-    public List<User> findAllUsers() {
-        return userRepository.findAll();
-    }
-
-
-    public List<User> findUsersByEmailFragment(String fragment) {
-        return userRepository.findByEmailIgnoreCaseContaining(fragment);
-    }
-
-    public List<User> findUsersByNameFragment(String fragment) {
-        return userRepository.findByFirstNameIgnoreCaseContainingOrLastNameIgnoreCaseContaining(fragment, fragment);
-    }
-
-    public Optional<User> findById(Long userId) {
-        return userRepository.findById(userId);
-    }
-
-    // Metoda do usuwania użytkownika
-    public void deleteUser(User user) {
-        if (user.getId() == null) {
-            throw new IllegalArgumentException("User does not have an ID. Cannot delete.");
-        }
-        userRepository.delete(user);
-    }
-    // Metoda do updatowania
-    public User updateUser(User user) {
-        if (user.getId() == null) {
-            throw new IllegalArgumentException("User must have an ID to be updated.");
-        }
-        return userRepository.save(user);
-    }
-
 }

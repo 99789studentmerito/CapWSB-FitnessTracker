@@ -10,7 +10,7 @@ import pl.wsb.fitnesstracker.IntegrationTest;
 import pl.wsb.fitnesstracker.IntegrationTestBase;
 import pl.wsb.fitnesstracker.training.api.Training;
 import pl.wsb.fitnesstracker.training.internal.ActivityType;
-import pl.wsb.fitnesstracker.user.api.User;
+import pl.wsb.fitnesstracker.user.internal.model.User;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

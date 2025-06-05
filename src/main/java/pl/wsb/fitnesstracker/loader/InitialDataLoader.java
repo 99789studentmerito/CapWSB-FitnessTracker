@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import pl.wsb.fitnesstracker.training.api.Training;
 import pl.wsb.fitnesstracker.training.internal.ActivityType;
-import pl.wsb.fitnesstracker.user.api.User;
+import pl.wsb.fitnesstracker.user.internal.model.User;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -55,7 +55,8 @@ class InitialDataLoader {
         User user = new User(name,
                 lastName,
                 now().minusYears(age),
-                "%s.%s@domain.com".formatted(name, lastName));
+                "%s.%s@domain.com".formatted(name, lastName),
+                (name + "." + lastName).toLowerCase());
         return userRepository.save(user);
     }
 

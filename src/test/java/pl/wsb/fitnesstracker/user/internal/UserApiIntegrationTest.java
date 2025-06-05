@@ -8,7 +8,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import pl.wsb.fitnesstracker.IntegrationTest;
 import pl.wsb.fitnesstracker.IntegrationTestBase;
-import pl.wsb.fitnesstracker.user.api.User;
+import pl.wsb.fitnesstracker.user.internal.model.User;
 
 import java.time.LocalDate;
 import java.util.List;

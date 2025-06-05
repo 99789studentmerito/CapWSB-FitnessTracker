@@ -1,6 +1,7 @@
 package pl.wsb.fitnesstracker.user.api;
 
 import pl.wsb.fitnesstracker.exception.api.NotFoundException;
+import pl.wsb.fitnesstracker.user.internal.model.User;
 
 /**
  * Exception indicating that the {@link User} was not found.

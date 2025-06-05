@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.wsb.fitnesstracker.training.api.Training;
 import pl.wsb.fitnesstracker.training.api.TrainingDto;
-import pl.wsb.fitnesstracker.user.api.User;
+import pl.wsb.fitnesstracker.user.internal.model.User;
 import pl.wsb.fitnesstracker.user.api.UserDto;
 import pl.wsb.fitnesstracker.user.api.UserProvider;
 
@@ -24,7 +24,8 @@ public class TrainingMapper {
                 user.getFirstName(),
                 user.getLastName(),
                 user.getBirthdate(),
-                user.getEmail()
+                user.getEmail(),
+                user.getUsername()
         );
     }
 
